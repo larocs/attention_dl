@@ -8,7 +8,7 @@ idna==2.7
 kiwisolver==1.0.1
 matplotlib==3.0.1
 networkx==2.2
-nltk==3.3
+nltk==3.4.5
 numpy==1.15.4
 pydot==1.2.4
 pyparsing==2.3.0
