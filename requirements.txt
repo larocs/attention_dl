@@ -9,7 +9,7 @@ kiwisolver==1.0.1
 matplotlib==3.0.1
 networkx==2.2
 nltk==3.3
-numpy==1.15.4
+numpy==1.22.0
 pydot==1.2.4
 pyparsing==2.3.0
 PyPDF2==1.26.0
