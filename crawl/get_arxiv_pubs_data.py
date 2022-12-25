@@ -5,8 +5,10 @@ import json
 import os
 
 
-WEBDRIVER_PATH = '/home/erik/Downloads/chromedriver'
-QUERY_URL = 'https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=attention&terms-0-field=title&terms-1-operator=OR&terms-1-term=attentional&terms-1-field=title&terms-2-operator=OR&terms-2-term=attentive&terms-2-field=title&terms-3-operator=OR&terms-3-term=attention&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=attentional&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=attentive&terms-5-field=abstract&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2019&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first'
+WEBDRIVER_PATH = '/usr/bin/chromedriver'
+# QUERY_URL = 'https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=attention&terms-0-field=title&terms-1-operator=OR&terms-1-term=attentional&terms-1-field=title&terms-2-operator=OR&terms-2-term=attentive&terms-2-field=title&terms-3-operator=OR&terms-3-term=attention&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=attentional&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=attentive&terms-5-field=abstract&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2019&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first'
+# QUERY_URL = "https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=social+network+content&terms-0-field=title&terms-1-operator=OR&terms-1-term=social+network+spread&terms-1-field=title&terms-2-operator=OR&terms-2-term=social+network+diffusion&terms-2-field=title&terms-3-operator=OR&terms-3-term=social+network+content&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=social+network+spread&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=social+network+diffusion&terms-5-field=abstract&terms-6-operator=OR&terms-6-term=social+network+post&terms-6-field=title&terms-7-operator=OR&terms-7-term=social+network+post&terms-7-field=abstract&classification-computer_science=y&classification-physics=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2022&date-date_type=announced_date_first&abstracts=show&size=200&order=-announced_date_first"
+QUERY_URL = "https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=social+network+content&terms-0-field=title&terms-1-operator=OR&terms-1-term=social+network+spread&terms-1-field=title&terms-2-operator=OR&terms-2-term=social+network+diffusion&terms-2-field=title&terms-3-operator=OR&terms-3-term=social+network+content&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=social+network+spread&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=social+network+diffusion&terms-5-field=abstract&terms-6-operator=OR&terms-6-term=social+network+post&terms-6-field=title&terms-7-operator=OR&terms-7-term=social+network+post&terms-7-field=abstract&terms-8-operator=OR&terms-8-term=social+network+media&terms-8-field=title&terms-9-operator=OR&terms-9-term=social+network+media&terms-9-field=abstract&classification-computer_science=y&classification-physics=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2022&date-date_type=announced_date_first&abstracts=show&size=200&order=-announced_date_first"
 DST_DIR_PATH = './arxiv_papers_infos'
 
 
@@ -27,6 +29,7 @@ def get_publication_data(usr, page_num, result_num, result_elem):
         print('ERROR: "{}"'.format(e))
         data['success'] = False
         data['message'] = str(e)
+        raise e
     return data
 
 

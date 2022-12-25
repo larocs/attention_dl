@@ -3,6 +3,7 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from requests.utils import urlparse
 import datetime as dt
 import time
@@ -74,7 +75,7 @@ class User:
     def __init__(self, driver, verbose=True):
         self.info = print if verbose else (lambda *a, **ka: None)
         self.driver = driver
-
+        # self.driver.implicitly_wait(20)
 
     def access(self, url, refresh=False):
         self.info('acessing "{}"...'.format(url), flush=True, end=' ')
@@ -83,63 +84,61 @@ class User:
 
 
     def scroll_to_bottom(self):
-        html = self.driver.find_element_by_tag_name('html')
+        html = self.driver.find_element(By.TAG_NAME, "html")
         html.send_keys(Keys.END)
 
 
 class ArxivUser(User):
     def get_results_elems(self):
-        elems = self.driver.find_elements_by_class_name('arxiv-result')
+        # elems = self.driver.find_elements_by_class_name('arxiv-result')
+        # elems = self.driver.find_elements("name", "arxiv-result")
+        elems = self.driver.find_elements(By.CLASS_NAME, "arxiv-result")
         return elems
 
-
     def _get_title_elem(self, result_elem):
-        elem = result_elem.find_element_by_class_name('title')
+        # elem = result_elem.find_element_by_class_name('title')
+        elem = result_elem.find_element(By.CLASS_NAME, "title")
         return elem
-
 
     def get_title(self, result_elem):
         elem = self._get_title_elem(result_elem)
         title = elem.text.lower()
         return title
 
-
     def _get_authors_elem(self, result_elem):
-        elem = result_elem.find_element_by_class_name('authors')
+        # elem = result_elem.find_element_by_class_name('authors')
+        elem = result_elem.find_element(By.CLASS_NAME, "authors")
         return elem
-
 
     def _get_arxiv_id_elem(self, result_elem):
-        elem = result_elem.find_element_by_class_name('list-title')
-        elem = elem.find_element_by_tag_name('a')
+        # elem = result_elem.find_element_by_class_name('list-title')
+        elem = result_elem.find_element(By.CLASS_NAME, "list-title")
+        # elem = elem.find_element_by_tag_name('a')
+        elem = elem.find_element(By.TAG_NAME, "a")
         return elem
-
 
     def get_arxiv_id(self, result_elem):
         elem = self._get_arxiv_id_elem(result_elem)
         arxiv_id = elem.text.split(':')[1]
         return arxiv_id
 
-
     def _get_short_abstract_elem(self, result_elem):
-        elem = result_elem.find_element_by_class_name('abstract-short')
+        # elem = result_elem.find_element_by_class_name('abstract-short')
+        elem = result_elem.find_element(By.CLASS_NAME, "abstract-short")
         return elem
-
 
     def _get_expand_abstract_elem(self, short_abstract_elem):
-        elem = short_abstract_elem.find_element_by_tag_name('a')
+        # elem = short_abstract_elem.find_element_by_tag_name('a')
+        elem = short_abstract_elem.find_element(By.TAG_NAME, "a")
         return elem
-
 
     def _expand_abstract(self, short_abstract_elem):
         elem = self._get_expand_abstract_elem(short_abstract_elem)
         click(elem)
 
-
     def _get_full_abstract_elem(self, result_elem):
-        elem = result_elem.find_element_by_class_name('abstract-full')
+        elem = result_elem.find_element(By.CLASS_NAME, "abstract-full")
         return elem
-
 
     def get_abstract(self, result_elem):
         full_abstract_elem = self._get_full_abstract_elem(result_elem)
@@ -150,18 +149,15 @@ class ArxivUser(User):
         text = full_abstract_elem.text[:-7].lower()
         return text
 
-
     def _get_authors_elems(self, result_elem):
-        elem = result_elem.find_element_by_class_name('authors')
-        elems = elem.find_elements_by_tag_name('a')
+        elem = result_elem.find_element(By.CLASS_NAME, "authors")
+        elems = elem.find_elements(By.TAG_NAME, "a")
         return elems
-
 
     def get_authors(self, result_elem):
         elems = self._get_authors_elems(result_elem)
         authors = [e.text.lower() for e in elems]
         return authors
-
 
     def _get_submission_date_elem(self, result_elem):
         classes_to_avoid = {
@@ -170,7 +166,7 @@ class ArxivUser(User):
             'authors',
             'abstract',
         }
-        elems = result_elem.find_elements_by_tag_name('p')
+        elems = result_elem.find_elements(By.TAG_NAME, "p")
         for elem in elems:
             classes = elem.get_attribute('class').split(' ')
             if not any(c in classes_to_avoid for c in classes):
@@ -214,7 +210,7 @@ class ArxivUser(User):
 
     def _get_next_results_page_btn_elem(self):
         try:
-            elem = self.driver.find_element_by_class_name('pagination-next')
+            elem = self.driver.find_element(By.CLASS_NAME, 'pagination-next')
         except NoSuchElementException:
             return None
         return elem
@@ -251,13 +247,13 @@ class ArxivUser(User):
 
 class DblpUser(User):
     def _get_pub_list_elem(self):
-        elem = self.driver.find_element_by_class_name('publ-list')
+        elem = self.driver.find_element(By.CLASS_NAME, 'publ-list')
         return elem
 
 
     def _get_pub_elems(self):
         pub_list_elem = self._get_pub_list_elem()
-        elems = pub_list_elem.find_elements_by_class_name('entry')
+        elems = pub_list_elem.find_elements(By.CLASS_NAME, 'entry')
         return elems
 
 
@@ -280,9 +276,9 @@ class DblpUser(User):
 
 
     def _get_bibtex_elem(self, pub_elem):
-        elems = pub_elem.find_elements_by_class_name('drop-down')
+        elems = pub_elem.find_elements(By.CLASS_NAME, 'drop-down')
         for elem in elems:
-            a = elem.find_element_by_tag_name('a')
+            a = elem.find_element(By.TAG_NAME, "a")
             text = a.get_attribute('href')
             if '/bibtex/' in text:
                 return a
@@ -298,19 +294,19 @@ class DblpUser(User):
 
 class MsAiUser(User):
     def _get_results_elem(self):
-        elem = self.driver.find_element_by_class_name(
+        elem = self.driver.find_element(By.CLASS_NAME, 
             'msr-faceted-search-results__items')
         return elem
 
 
     def get_pub_elems(self):
         results_elem = self._get_results_elem()
-        elems = results_elem.find_elements_by_tag_name('article')
+        elems = results_elem.find_elements(By.TAG_NAME, "article")
         return elems
 
 
     def _get_pub_link_elem(self, pub_elem):
-        elem = pub_elem.find_element_by_class_name('card__link')
+        elem = pub_elem.find_element(By.CLASS_NAME, 'card__link')
         return elem
 
 
@@ -320,8 +316,8 @@ class MsAiUser(User):
 
 
     def _get_bibtex_link_elem(self):
-        elem = self.driver.find_element_by_class_name('bibtex-link')
-        elem = elem.find_element_by_tag_name('a')
+        elem = self.driver.find_element(By.CLASS_NAME, 'bibtex-link')
+        elem = elem.find_element(By.TAG_NAME, "a")
         return elem
 
 
@@ -335,7 +331,7 @@ class MsAiUser(User):
 
 
     def _get_next_btn_elem(self):
-        elem = self.driver.find_element_by_class_name('next')
+        elem = self.driver.find_element(By.CLASS_NAME, 'next')
         return elem
 
 
@@ -357,12 +353,12 @@ class AbstractGetter(User):
 
     def _get_springer_abstract(self):
         elem = self.driver.find_element_by_id('Abs1')\
-            .find_element_by_class_name('Para')
+            .find_element(By.CLASS_NAME, 'Para')
         return elem.text
 
 
     def _get_ieeexplore_abstract(self):
-        elem = self.driver.find_element_by_class_name('abstract-text')
+        elem = self.driver.find_element(By.CLASS_NAME, 'abstract-text')
         return elem.text.lstrip('Abstract:').strip()
 
 
@@ -381,7 +377,7 @@ class AbstractGetter(User):
             elem = self.driver.find_element_by_id('abstract')
         except:
             try:
-                elem = self.driver.find_element_by_class_name('abstract')
+                elem = self.driver.find_element(By.CLASS_NAME, 'abstract')
             except:
                 raise
         return elem.text
