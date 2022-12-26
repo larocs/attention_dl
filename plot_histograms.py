@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Plots previously produced histograms (word/citation count) for visualization.
 '''

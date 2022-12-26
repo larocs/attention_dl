@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 This script pre-processes papers metadata extracted from Zotero.
 It formats some fields and includes others.
@@ -17,10 +14,12 @@ import util
 import config as cfg
 
 
+rp.LIST_TYPE_TAGS = tuple(rp.LIST_TYPE_TAGS + ("UR",))
+
 def load_ris(path):
     with open(path) as f:
         entries = rp.readris(f)
-    entries = list(entries)
+    entries = list(entries)[:2]
     return entries
 
 
@@ -101,7 +100,7 @@ def _pre_proc_paper_metas(metas):
     metas = set_default_values(metas)
     metas = [pre_proc_paper_meta(m) for m in metas]
     metas = mk_unique_norm_titles(metas)
-    assert len(metas) == len({m['uid'] for m in metas})
+    # assert len(metas) == len({m['uid'] for m in metas})
     return metas
 
 

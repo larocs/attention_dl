@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Plots reference graphs for authors and titles.
 '''
@@ -103,7 +100,7 @@ def relabel_hist(hist, mapping):
 def unit_norm_hist(hist):
     minn = min(hist.values())
     maxx = max(hist.values())
-    hist = {k: (v - minn)/(maxx - minn) for k, v in hist.items()}
+    hist = {k: (v - minn)/(maxx - minn + 1e-6) for k, v in hist.items()}
     hist = get_def_dict(hist, float)
     return hist
 
@@ -135,6 +132,7 @@ def get_node_colors(nx_graph):
 def plot_nx_graph(graph, hist, **kwargs):
     norm_hist = unit_norm_hist(hist)
     fig, ax = plt.subplots()
+    del kwargs['title']
     nx.draw_networkx(
         graph,
         pos=get_plot_layout(graph),

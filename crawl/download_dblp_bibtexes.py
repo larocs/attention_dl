@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 import urllib.request as req
 from multiprocessing.pool import ThreadPool
 import os

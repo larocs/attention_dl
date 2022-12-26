@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Plots occurrences of attention-themed papers over years.
 An attention-themed paper is defined as a paper with either

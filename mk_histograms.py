@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Produces the following set of histograms:
     - word count for all abstracts/titles in papers

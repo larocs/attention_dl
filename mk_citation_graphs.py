@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Makes citation graphs for authors and titles, in the style of:
     - author: {authors cited by author in collection of papers}
@@ -32,29 +29,48 @@ def get_rev_graph(graph):
     return rev_graph
 
 
+# def get_title_refs_graph(metas, refs):
+#     all_titles = {m['norm-title'] for m in metas}
+#     graph = {}
+#     for meta in metas:
+#         refs_ = refs.get(meta['uid'], [])
+#         cited_titles = {r['norm-title'] for r in refs_}
+#         cited_titles &= all_titles
+#         graph[meta['norm-title']] = cited_titles
+#     return graph
+
+
 def get_title_refs_graph(metas, refs):
-    all_titles = {m['norm-title'] for m in metas}
+    all_titles = {m['title'] for m in metas}
     graph = {}
     for meta in metas:
         refs_ = refs.get(meta['uid'], [])
-        cited_titles = {r['norm-title'] for r in refs_}
+        cited_titles = []
+        for ref in refs_:
+            if ref:
+                cited_titles.append(util.normalize_title(ref[0]))
+        cited_titles = set(cited_titles)
         cited_titles &= all_titles
-        graph[meta['norm-title']] = cited_titles
+        graph[meta['title']] = cited_titles
     return graph
+
+
+# def get_author_refs_graph(metas, refs):
+#     all_titles = {m['norm-title'] for m in metas}
+#     all_authors = set(util.flatten(m['norm-authors'] for m in metas))
+#     graph = {a: set() for a in all_authors}
+#     for meta in metas:
+#         refs_ = refs.get(meta['uid'], [])
+#         refs_ = [r for r in refs_ if r['norm-title'] in all_titles]
+#         cited_authors = set(util.flatten(r['norm-authors'] for r in refs_))
+#         cited_authors &= all_authors
+#         for a in meta['norm-authors']:
+#             graph[a] |= cited_authors
+#     return graph
 
 
 def get_author_refs_graph(metas, refs):
-    all_titles = {m['norm-title'] for m in metas}
-    all_authors = set(util.flatten(m['norm-authors'] for m in metas))
-    graph = {a: set() for a in all_authors}
-    for meta in metas:
-        refs_ = refs.get(meta['uid'], [])
-        refs_ = [r for r in refs_ if r['norm-title'] in all_titles]
-        cited_authors = set(util.flatten(r['norm-authors'] for r in refs_))
-        cited_authors &= all_authors
-        for a in meta['norm-authors']:
-            graph[a] |= cited_authors
-    return graph
+    return {}
 
 
 def mk_citation_graphs():

@@ -17,7 +17,10 @@ if not os.path.isdir(paths['data-dir']):
 paths['exported-metadata-dir'] = os.path.join(
     paths['data-dir'], 'zotero-exported-items')
 paths['raw-papers-metadata'] = os.path.join(
-    paths['exported-metadata-dir'], 'zotero-exported-items.ris')
+    paths['exported-metadata-dir'],
+    # 'zotero-exported-items.ris'
+    'arxiv_papers.ris'
+)
 
 #pre-processed papers metadata based on zotero exported metadata
 paths['papers-metadata'] = os.path.join(
@@ -96,4 +99,4 @@ paths['search-pubs-results-dir'] = os.path.join(
     paths['data-dir'], 'search-pubs-results')
 
 #number of threads to use on scripts that use parallelism
-n_threads = 8
+n_threads = 4

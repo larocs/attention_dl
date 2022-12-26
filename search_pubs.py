@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Searches publication titles on google scholar using scholarly.
 '''

@@ -31,9 +31,11 @@ def get_tmp_file(filename=None, suffix=None):
 
 
 def download(url, dst_path):
-    with open(dst_path, 'w') as f:
-        resp = requests.get(url)
-        f.write(str(resp.content))
+    resp = requests.get(url, stream=True)
+    with open(dst_path, 'wb') as f:
+        # f.write(str(resp.content))
+        for chunk in resp.iter_content(chunk_size=2048):
+            f.write(chunk)
     return dst_path
 
 
@@ -120,6 +122,7 @@ def parallelize(fn, args, n_threads=1, star=False):
         ret = pool.starmap(fn, args)
     else:
         ret = pool.map(fn, args)
+        # ret = pool.map_async(fn, args)
     return ret
 
 

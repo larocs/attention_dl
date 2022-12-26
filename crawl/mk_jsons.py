@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 import pubmd
 import json
 import glob

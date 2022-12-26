@@ -4,6 +4,8 @@ def dict2ris(metadata):
     fields.append(f"AB  - {metadata['abstract']}")
     for author in metadata["authors"]:
         fields.append(f"AU  - {author}")
+    url = f"https://arxiv.org/pdf/{metadata['arxiv_id']}.pdf"
+    fields.append(f"UR  - {url}")
     ris = "TY  - GEN\n" + "\n".join(fields) + "\nER  - "
     return ris
 

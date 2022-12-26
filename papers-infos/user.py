@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from selenium import webdriver
 from fuzzywuzzy import fuzz
 from requests.utils import urlparse

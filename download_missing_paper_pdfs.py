@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Downloads pdf files from papers metadata file.
 '''
@@ -49,8 +46,11 @@ def download_paper_pdf_if_needed(meta):
         return meta
     try:
         path = get_local_pdf_path(meta, cfg.paths['pdfs-dir'])
-        info('downloading pdf from "{}"'.format(url))
-        util.download(url, path)
+        if not os.path.isfile(path):
+            info('downloading pdf from "{}"'.format(url))
+            util.download(url, path)
+        else:
+            info(f"I've got that shit {path.split('/')[-1]} already.")
         meta['pdf-path'] = path
     except Exception as e:
         info('ERROR downloading pdf: "{}"'.format(e))
@@ -64,6 +64,7 @@ def download_missing_paper_pdfs():
 
     metas = util.load_json(cfg.paths['papers-metadata'])
     metas = util.parallelize(download_paper_pdf_if_needed, metas, N_THREADS)
+    # download_paper_pdf_if_needed(metas)
     util.save_json(cfg.paths['papers-metadata'], metas)
 
     print('\n----')

@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 '''
 Extracts references from pdf files.
 '''
@@ -14,7 +11,7 @@ import config as cfg
 
 
 #script config
-N_THREADS = cfg.n_threads*4
+N_THREADS = cfg.n_threads * 4
 PARSING_API_URL = 'http://freecite.library.brown.edu/citations/create'
 
 
@@ -61,8 +58,9 @@ def _parse_raw_refs(refs):
 
 def parse_raw_refs():
     refs = util.load_json(cfg.paths['raw-papers-refs'])
-    data = util.parallelize(_parse_raw_refs, list(refs.values()), N_THREADS)
-    refs = {k: v for k, v in zip(refs.keys(), data)}
+    # data = util.parallelize(_parse_raw_refs, list(refs.values()), N_THREADS)
+    # refs = {k: v for k, v in zip(refs.keys(), data)}
+    refs = {k: v for k, v in refs.items()}
     util.save_json(cfg.paths['papers-refs'], refs)
 
     print('saved papers refs to "{}"'.format(cfg.paths['papers-refs']))

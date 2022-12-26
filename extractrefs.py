@@ -1,9 +1,7 @@
-#!/usr/bin/env python2.7
-
-import refextract
 from refextract import extract_references_from_file, extract_references_from_url
 import sys
 import json
+
 
 def main():
     if len(sys.argv) < 2:
@@ -16,9 +14,11 @@ def main():
         sys.argv[2] if len(sys.argv) > 2 else pdf_path.replace('.pdf', '.json')
 
     if pdf_path.startswith('http://') or pdf_path.startswith('https://'):
-        refs = refextract.extract_references_from_url(pdf_path)
+        # refs = refextract.extract_references_from_url(pdf_path)
+        refs = extract_references_from_url(pdf_path)
     else:
-        refs = refextract.extract_references_from_file(pdf_path)
+        # refs = refextract.extract_references_from_file(pdf_path)
+        refs = extract_references_from_file(pdf_path)
 
     with open(dst_path, 'w') as f:
         json.dump(refs, f, indent=4)
