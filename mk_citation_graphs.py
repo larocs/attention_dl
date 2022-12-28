@@ -39,8 +39,18 @@ def get_rev_graph(graph):
 #         graph[meta['norm-title']] = cited_titles
 #     return graph
 
+############
+
+# from difflib import SequenceMatcher
+
+
+# def similar(a, b):
+#     return SequenceMatcher(None, a, b).ratio()
+
 
 def get_title_refs_graph(metas, refs):
+    for m in metas:
+        m['title'] = util.normalize_title(m['title'])
     all_titles = {m['title'] for m in metas}
     graph = {}
     for meta in metas:
@@ -50,6 +60,17 @@ def get_title_refs_graph(metas, refs):
             if ref:
                 cited_titles.append(util.normalize_title(ref[0]))
         cited_titles = set(cited_titles)
+        # for ctitle in cited_titles:
+        #     for atitle in all_titles:
+        #         sim = similar(
+        #             ctitle,
+        #             atitle
+        #         )
+        #         if sim > 0.8:
+        #             print(sim)
+        #             print(ctitle)
+        #             print(atitle)
+        #             import pdb; pdb.set_trace()
         cited_titles &= all_titles
         graph[meta['title']] = cited_titles
     return graph

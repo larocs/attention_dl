@@ -30,13 +30,15 @@ def get_plot_shape(terms):
 
 
 def plot_hist(hist, max_n_terms=None, title=None):
+    #plotting
+    fig, ax = plt.subplots()
     #converting word freq hist to sorted list of words and frequencies
+    if len(hist) == 0:
+        return fig
     terms_freqs = sorted(hist.items(), key=lambda kv: kv[1], reverse=True)
     terms_freqs = terms_freqs[slice(max_n_terms)]
     terms, freqs = map(list, zip(*terms_freqs))
     x = list(range(len(terms)))
-    #plotting
-    fig, ax = plt.subplots()
     ax.barh(x, freqs, align='center', color=DEF_COLOR)
     #title/labels
     ax.set_yticks(x)

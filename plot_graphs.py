@@ -23,7 +23,8 @@ RELABEL_TITLES = False
 RELABEL_AUTHORS = False
 #graph drawing layouts to be tried in preference order
 PREFERRED_LAYOUTS = [
-    lambda g: nx.drawing.nx_pydot.graphviz_layout(g, prog='neato'),
+    # lambda g: nx.drawing.nx_pydot.graphviz_layout(g, prog='neato'),
+    # lambda g: nx.drawing.nx_pydot.graphviz_layout(g, prog=None),
     lambda g: nx.drawing.kamada_kawai_layout(g),
     lambda g: nx.drawing.shell_layout(g),
     lambda g: None,
@@ -130,8 +131,8 @@ def get_node_colors(nx_graph):
 
 
 def plot_nx_graph(graph, hist, **kwargs):
-    norm_hist = unit_norm_hist(hist)
     fig, ax = plt.subplots()
+    norm_hist = unit_norm_hist(hist)
     del kwargs['title']
     nx.draw_networkx(
         graph,
@@ -203,7 +204,7 @@ def plot_authors_graph():
 
 def plot_graphs():
     plot_titles_graph()
-    plot_authors_graph()
+    # plot_authors_graph()
 
 
 def main():

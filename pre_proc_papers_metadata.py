@@ -19,7 +19,7 @@ rp.LIST_TYPE_TAGS = tuple(rp.LIST_TYPE_TAGS + ("UR",))
 def load_ris(path):
     with open(path) as f:
         entries = rp.readris(f)
-    entries = list(entries)[:2]
+    entries = list(entries)
     return entries
 
 

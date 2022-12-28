@@ -51,7 +51,9 @@ def extract_raw_refs_from_pdf(meta):
             meta['norm-title'], e))
         refs = []
     # refs = [r.get('raw_ref', '') for r in refs]
-    refs = [r.get('title', '') for r in refs]
+    refs = [
+        r.get('title', '') for r in refs
+    ]
     return refs
 
 
