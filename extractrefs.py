@@ -1,9 +1,8 @@
-#!/usr/bin/env python2.7
-
 import refextract
 from refextract import extract_references_from_file, extract_references_from_url
 import sys
 import json
+
 
 def main():
     if len(sys.argv) < 2:

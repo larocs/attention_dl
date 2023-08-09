@@ -10,7 +10,7 @@ import random
 import user
 
 
-WEBDRIVER_PATH = '/home/erik/Downloads/chromedriver'
+WEBDRIVER_PATH = "C:\\Users\\DXT6\\Downloads\\bin\\chromedriver.exe"
 SRC_DIR_PATH = './pubs/jsons'
 DST_DIR_PATH = './updated_pubs/jsons'
 N_WORKERS = 6

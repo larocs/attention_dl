@@ -18,6 +18,7 @@ def extract_refs(src_path):
     #it's necessary to wrap the script because the lib is in python2.7
     dst_path = util.get_tmp_file(suffix='.json')
     util.run_cmd([
+        "python",
         cfg.extract_refs_script_path,
         src_path,
         dst_path,
@@ -29,10 +30,12 @@ def extract_refs(src_path):
 def extract_raw_refs_from_pdf(meta):
     print('on paper "{}"'.format(meta['norm-title']))
     try:
+        print(f"On path: {meta['pdf-path']}")
         refs = extract_refs(meta['pdf-path'])
     except Exception as e:
         print('ERROR on paper "{}": "{}"'.format(
-            meta['norm-title'], e))
+            meta['norm-title'], e)
+        )
         refs = []
     refs = [r.get('raw_ref', '') for r in refs]
     return refs
@@ -40,7 +43,10 @@ def extract_raw_refs_from_pdf(meta):
 
 def extract_raw_refs_from_pdfs():
     metas = util.load_json(cfg.paths['papers-metadata'])
-    refs = util.parallelize(extract_raw_refs_from_pdf, metas, N_THREADS)
+    # refs = util.parallelize(extract_raw_refs_from_pdf, metas, N_THREADS)
+    refs = []
+    for meta in metas:
+        refs.append(extract_raw_refs_from_pdf(meta))
     refs = {m['uid']: r for m, r in zip(metas, refs)}
     util.save_json(cfg.paths['raw-papers-refs'], refs)
 

@@ -18,7 +18,7 @@ import config as cfg
 
 
 def load_ris(path):
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         entries = rp.readris(f)
     entries = list(entries)
     return entries

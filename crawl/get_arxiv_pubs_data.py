@@ -5,8 +5,9 @@ import json
 import os
 
 
-WEBDRIVER_PATH = '/home/erik/Downloads/chromedriver'
-QUERY_URL = 'https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=attention&terms-0-field=title&terms-1-operator=OR&terms-1-term=attentional&terms-1-field=title&terms-2-operator=OR&terms-2-term=attentive&terms-2-field=title&terms-3-operator=OR&terms-3-term=attention&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=attentional&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=attentive&terms-5-field=abstract&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2019&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first'
+WEBDRIVER_PATH = "C:\\Users\\DXT6\\Downloads\\bin\\chromedriver.exe"
+# QUERY_URL = 'https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=attention&terms-0-field=title&terms-1-operator=OR&terms-1-term=attentional&terms-1-field=title&terms-2-operator=OR&terms-2-term=attentive&terms-2-field=title&terms-3-operator=OR&terms-3-term=attention&terms-3-field=abstract&terms-4-operator=OR&terms-4-term=attentional&terms-4-field=abstract&terms-5-operator=OR&terms-5-term=attentive&terms-5-field=abstract&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-year=&date-filter_by=date_range&date-from_date=2014&date-to_date=2019&date-date_type=submitted_date&abstracts=show&size=200&order=-announced_date_first'
+QUERY_URL = 'https://arxiv.org/search/advanced?advanced=1&terms-0-operator=AND&terms-0-term=dynamic+neural+network&terms-0-field=abstract&terms-3-operator=OR&terms-3-term=conditional+neural+network&terms-3-field=abstract&terms-5-operator=OR&terms-5-term=neural+architecture+search&terms-5-field=abstract&terms-7-operator=OR&terms-7-term=adaptive+neural+network&terms-7-field=abstract&terms-9-operator=OR&terms-9-term=gated+neural+network&terms-9-field=abstract&classification-computer_science=y&classification-physics_archives=all&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=50&order=-announced_date_first'
 DST_DIR_PATH = './arxiv_papers_infos'
 
 
@@ -47,8 +48,15 @@ def main():
     if not os.path.isdir(DST_DIR_PATH):
         os.makedirs(DST_DIR_PATH)
 
+    from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service
+    _service = Service(executable_path=WEBDRIVER_PATH)
+    _options = webdriver.ChromeOptions()
+    _driver = webdriver.Chrome(service=_service, options=_options)
     usr = user.ArxivUser(
-        driver=user.get_chrome_driver(WEBDRIVER_PATH, page_load_timeout=60))
+        # driver=user.get_chrome_driver(WEBDRIVER_PATH, page_load_timeout=60)
+        driver=_driver
+    )
     usr.access(QUERY_URL)
 
     page_num = 1

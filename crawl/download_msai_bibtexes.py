@@ -3,7 +3,7 @@
 import user
 
 
-WEBDRIVER_PATH = '/home/erik/Downloads/chromedriver'
+WEBDRIVER_PATH = "C:\\Users\\DXT6\\Downloads\\bin\\chromedriver.exe"
 QUERY_URLS = [
     #'https://www.microsoft.com/en-us/research/search/?q=attention&facet%5Btax%5D%5Bmsr-content-type%5D%5B%5D=3&facet%5Bdate%5D%5Brange%5D%5Bfrom%5D=2014-1-1&facet%5Bdate%5D%5Brange%5D%5Bto%5D=2019-12-31',
     #'https://www.microsoft.com/en-us/research/search/?q=attentional&facet%5Bdate%5D%5Brange%5D%5Bfrom%5D=2014-1-1&facet%5Bdate%5D%5Brange%5D%5Bto%5D=2019-12-31&facet%5Btax%5D%5Bmsr-content-type%5D%5B%5D=3',

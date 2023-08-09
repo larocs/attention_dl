@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from fuzzywuzzy import fuzz
 from requests.utils import urlparse
 import os
 
 _FILE_DIR = os.path.abspath(os.path.dirname(__file__))
-DEF_WEBDRIVER_PATH = '/home/erik/webdriver'
+DEF_WEBDRIVER_PATH = "C:\\Users\\DXT6\\Downloads\\bin\\chromedriver.exe"
 DEF_PAGE_LOAD_TIMEOUT = 25
 MAX_N_RETRIES = 3
 GOOGLE_URL = 'http://google.com'
@@ -82,23 +83,23 @@ def get_search_query_url(query):
 
 
 def get_search_results_list_elem(driver):
-    return driver.find_element_by_id('search')
+    return driver.find_element(By.ID, 'search')
 
 
 def get_search_result_elems_from_list_elem(elem):
-    return elem.find_elements_by_class_name('rc')
+    return elem.find_elements(By.CLASS_NAME, 'rc')
 
 
 def get_header_elem_from_search_result_elem(elem):
-    return elem.find_elements_by_class_name('r')[0]
+    return elem.find_elements(By.CLASS_NAME, 'r')[0]
 
 
 def get_title_elem_from_search_header_elem(elem):
-    return elem.find_elements_by_tag_name('h3')[0]
+    return elem.find_elements(By.TAG_NAME, 'h3')[0]
 
 
 def get_text_elems_from_search_result_elem(elem):
-    return elem.find_elements_by_class_name('fl')
+    return elem.find_elements(By.CLASS_NAME, 'fl')
 
 
 def get_title_from_search_result_elem(elem):

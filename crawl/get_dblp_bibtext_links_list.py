@@ -3,7 +3,7 @@
 import user
 
 
-WEBDRIVER_PATH = '/home/erik/Downloads/chromedriver'
+WEBDRIVER_PATH = "C:\\Users\\DXT6\\Downloads\\bin\\chromedriver.exe"
 QUERY_URL = 'https://dblp.uni-trier.de/search?q=attention%7Cattentive%7Cattentional%20year%3A2019%7C2018%7C2017%7C2016%7C2015%7C2014%20type%3AJournal_Articles%3A%7Ctype%3AConference_and_Workshop_Papers%3A'
 DST_PATH = 'dblp_bibtex_links.csv'
 
