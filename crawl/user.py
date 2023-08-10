@@ -285,7 +285,7 @@ class DblpUser(User):
         for elem in elems:
             a = elem.find_element(By.TAG_NAME, 'a')
             text = a.get_attribute('href')
-            if '/bibtex/' in text:
+            if 'bibtex' in text:
                 return a
         raise ValueError('no bibtex elem found')
 
@@ -293,7 +293,7 @@ class DblpUser(User):
     def get_bibtex_link(self, pub_elem):
         elem = self._get_bibtex_elem(pub_elem)
         text = elem.get_attribute('href')
-        link = text.replace('/bibtex/', '/bib2/') + '.bib'
+        link = text.replace('bibtex', 'bib2') + '.bib'
         return link
 
 

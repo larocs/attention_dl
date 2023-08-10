@@ -21,6 +21,7 @@ def download(link):
     path = get_path(link)
     if os.path.isfile(path):
         return
+    path = path.replace(".html?view=", "_")
     req.urlretrieve(link, path)
     print('saved to', path)
 
