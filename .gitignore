@@ -7,3 +7,7 @@ papers-infos/titles.csv
 __pycache__/
 venv/
 *.swp
+crawl/_arxiv_papers_infos
+crawl/arxiv_papers_infos
+crawl/dblp_bibtexes
+*.csv
