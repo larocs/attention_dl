@@ -1,0 +1,8 @@
+# python
+ipykernel
+chromadb
+openai
+langchain
+pypdf
+tiktoken
+lark
