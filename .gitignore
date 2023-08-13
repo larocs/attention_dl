@@ -11,3 +11,4 @@ crawl/_arxiv_papers_infos
 crawl/arxiv_papers_infos
 crawl/dblp_bibtexes
 *.csv
+*.chroma/
